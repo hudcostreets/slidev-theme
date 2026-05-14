@@ -1,0 +1,45 @@
+{
+  "name": "slidev-theme-hccs",
+  "version": "0.1.0",
+  "description": "Slidev theme for Hudson County Complete Streets — HCCS green / white, logo footer, per-slide QR.",
+  "keywords": [
+    "slidev-theme",
+    "slidev",
+    "hccs"
+  ],
+  "author": "Ryan Williams <ryan@runsascoded.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/hudcostreets/slidev-theme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hudcostreets/slidev-theme.git"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0",
+    "slidev": ">=0.50.0"
+  },
+  "slidev": {
+    "colorSchema": "dark",
+    "defaults": {
+      "transition": "none",
+      "aspectRatio": "16/9"
+    }
+  },
+  "scripts": {
+    "dev": "slidev example.md --open --port 3947",
+    "build": "slidev build example.md",
+    "export": "slidev export example.md"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@slidev/cli": "workspace:*",
+    "@slidev/theme-default": "latest"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.0.0"
+  }
+}

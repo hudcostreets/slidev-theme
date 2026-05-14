@@ -1,0 +1,198 @@
+:root {
+  /* HCCS core palette */
+  --hccs-green: #00793f;
+  --hccs-green-dark: #005c30;
+  --hccs-green-light: #2a9159;
+  --hccs-accent: #f3a712;     /* warm yellow/orange accent — bike-lane hi-vis */
+  --hccs-white: #ffffff;
+  --hccs-off-white: #f6f6f3;
+  --hccs-text-on-dark: #ffffff;
+  --hccs-text-on-light: #1a1a1a;
+  --hccs-muted-on-dark: rgba(255, 255, 255, 0.7);
+  --hccs-muted-on-light: rgba(0, 0, 0, 0.6);
+  --hccs-border-on-dark: rgba(255, 255, 255, 0.25);
+  --hccs-border-on-light: rgba(0, 0, 0, 0.15);
+
+  /* Fonts */
+  --hccs-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --hccs-font-mono: ui-monospace, 'SF Mono', 'Fira Code', Menlo, monospace;
+
+  /* Sizing */
+  --hccs-slide-pad: 2.5rem;
+}
+
+/* ============================================================
+ * Default (dark) scheme: green bg, white fg.
+ * Set `class: light` on a slide for white bg / dark fg.
+ * Slidev applies `.dark` / `.light` classes on the slide
+ * container based on the deck-level `colorSchema`.
+ * ============================================================ */
+
+.slidev-layout {
+  font-family: var(--hccs-font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: var(--hccs-slide-pad);
+  height: 100%;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.dark .slidev-layout {
+  background: var(--hccs-green);
+  color: var(--hccs-text-on-dark);
+  --slidev-code-background: rgba(0, 0, 0, 0.35);
+  --slidev-code-radius: 0.5rem;
+}
+
+.light .slidev-layout {
+  background: var(--hccs-white);
+  color: var(--hccs-text-on-light);
+}
+
+/* Per-slide `class: light` / `class: dark` overrides — works alongside the
+ * deck-level colorSchema, so individual slides can flip backgrounds
+ * without changing the global setting. */
+.slidev-layout.light {
+  background: var(--hccs-white);
+  color: var(--hccs-text-on-light);
+}
+.slidev-layout.dark {
+  background: var(--hccs-green);
+  color: var(--hccs-text-on-dark);
+}
+
+/* Typography */
+.slidev-layout h1 {
+  font-weight: 600;
+  font-size: 2.4em;
+  line-height: 1.15;
+  margin: 0 0 0.4em;
+  letter-spacing: -0.01em;
+}
+
+.slidev-layout h2 {
+  font-weight: 600;
+  font-size: 1.5em;
+  line-height: 1.25;
+  margin: 0.6em 0 0.3em;
+}
+
+.slidev-layout h3 {
+  font-weight: 600;
+  font-size: 1.2em;
+  margin: 0.5em 0 0.2em;
+}
+
+.slidev-layout h4 {
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0.4em 0 0.2em;
+}
+
+.slidev-layout p {
+  margin: 0 0 0.6em;
+}
+
+.slidev-layout ul,
+.slidev-layout ol {
+  padding-left: 1.4em;
+  margin: 0 0 0.6em;
+}
+
+.slidev-layout ul { list-style-type: disc; }
+.slidev-layout ol { list-style-type: decimal; }
+
+.slidev-layout li {
+  margin-bottom: 0.3em;
+  line-height: 1.45;
+}
+
+.slidev-layout strong {
+  font-weight: 700;
+}
+
+.slidev-layout em {
+  font-style: italic;
+}
+
+/* Links: accent on dark, green on light */
+.dark .slidev-layout a,
+.slidev-layout.dark a {
+  color: var(--hccs-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.light .slidev-layout a,
+.slidev-layout.light a {
+  color: var(--hccs-green);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Tables */
+.slidev-layout table {
+  border-collapse: collapse;
+  font-size: 0.9em;
+  margin: 0.5em 0;
+}
+.slidev-layout th,
+.slidev-layout td {
+  padding: 0.35em 0.7em;
+  text-align: left;
+  border-bottom: 1px solid var(--hccs-border-on-dark);
+}
+.light .slidev-layout th,
+.light .slidev-layout td,
+.slidev-layout.light th,
+.slidev-layout.light td {
+  border-bottom-color: var(--hccs-border-on-light);
+}
+.slidev-layout th {
+  font-weight: 600;
+}
+
+/* Code */
+.slidev-layout pre,
+.slidev-layout pre.shiki,
+.slidev-layout pre.slidev-code {
+  border-radius: 0.5rem;
+  padding: 0.9em 1.1em;
+  font-size: 0.85em;
+  line-height: 1.55;
+  overflow-x: auto;
+}
+.slidev-layout :not(pre) > code {
+  background: rgba(255, 255, 255, 0.18);
+  padding: 0.1em 0.35em;
+  border-radius: 0.25em;
+  font-family: var(--hccs-font-mono);
+  font-size: 0.92em;
+}
+.light .slidev-layout :not(pre) > code,
+.slidev-layout.light :not(pre) > code {
+  background: rgba(0, 0, 0, 0.07);
+  color: var(--hccs-green-dark);
+}
+
+/* Blockquotes */
+.slidev-layout blockquote {
+  border-left: 3px solid var(--hccs-accent);
+  padding: 0.1em 0 0.1em 1em;
+  margin: 0.6em 0;
+  font-style: italic;
+  opacity: 0.92;
+}
+
+/* Horizontal rules */
+.slidev-layout hr {
+  border: none;
+  border-top: 1px solid var(--hccs-border-on-dark);
+  margin: 1em 0;
+}
+.light .slidev-layout hr,
+.slidev-layout.light hr {
+  border-top-color: var(--hccs-border-on-light);
+}
