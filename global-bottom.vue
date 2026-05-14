@@ -39,8 +39,15 @@ const deckQrCfg = computed(() => {
 })
 const qrSkipSlides = computed(() => deckQrCfg.value.skipSlides ?? [])
 const slideNumEnabled = computed(() => slideFooter.value.slideNum ?? deckFooter.value.slideNum ?? true)
+// Skip the `/n` suffix when (1) the slide is in `qr.skipSlides`, (2) the
+// slide's layout is `cover` (canonical for the deck overall — `safe26.hccs.dev`
+// reads better than `safe26.hccs.dev/1` on the title slide), or (3) it's slide 1
+// (matches the default `qr.skipSlides: [1]` convention even when not set).
 const showSlideNum = computed(() =>
-  slideNumEnabled.value && !qrSkipSlides.value.includes(currentSlideNo.value),
+  slideNumEnabled.value
+  && currentSlideNo.value !== 1
+  && currentLayout.value !== 'cover'
+  && !qrSkipSlides.value.includes(currentSlideNo.value),
 )
 const displayUrl = computed(() => {
   if (!url.value) return null
