@@ -1,6 +1,6 @@
 <template>
   <footer v-if="!isHidden" class="hccs-footer" :class="{ light: isLight }">
-    <a v-if="url" class="hccs-foot-url" :href="urlHref" target="_blank">{{ url }}</a>
+    <a v-if="url" class="hccs-foot-url" :href="urlHref" target="_blank">{{ displayUrl }}</a>
     <a class="hccs-foot-logo" :href="logoHref" target="_blank">
       <img :src="logoSrc" alt="HCCS" />
     </a>
@@ -11,7 +11,7 @@
 import { configs, useNav } from '@slidev/client'
 import { computed } from 'vue'
 
-const { currentSlideRoute, currentLayout } = useNav()
+const { currentSlideRoute, currentLayout, currentSlideNo } = useNav()
 
 // Deck-level `footer:` block in headmatter overrides defaults:
 //   footer:
@@ -29,10 +29,31 @@ const slideFooter = computed(() => {
 })
 
 const url = computed(() => slideFooter.value.url ?? deckFooter.value.url ?? null)
+
+// When deck has `footer.slideNum: true` (or per-slide override), append `/<n>`
+// to the displayed URL — so it matches the per-slide QR target. Skipped on
+// slide 1 (cover) by default, matching `qr.skipSlides` convention.
+const deckQrCfg = computed(() => {
+  const v = configs.qr
+  return (typeof v === 'object' && v !== null) ? v : {}
+})
+const qrSkipSlides = computed(() => deckQrCfg.value.skipSlides ?? [])
+const slideNumEnabled = computed(() => slideFooter.value.slideNum ?? deckFooter.value.slideNum ?? true)
+const showSlideNum = computed(() =>
+  slideNumEnabled.value && !qrSkipSlides.value.includes(currentSlideNo.value),
+)
+const displayUrl = computed(() => {
+  if (!url.value) return null
+  return showSlideNum.value ? `${url.value}/${currentSlideNo.value}` : url.value
+})
+
 const urlHref = computed(() => {
   const explicit = slideFooter.value.urlHref ?? deckFooter.value.urlHref
-  if (explicit) return explicit
-  return url.value ? `https://${url.value}` : '#'
+  const base = explicit || (url.value ? `https://${url.value}` : '#')
+  if (showSlideNum.value && base !== '#') {
+    return `${base.replace(/\/$/, '')}/${currentSlideNo.value}`
+  }
+  return base
 })
 const logoHref = computed(() => slideFooter.value.logoHref ?? deckFooter.value.logoHref ?? 'https://hudcostreets.org')
 
@@ -58,12 +79,14 @@ const isHidden = computed(() =>
 <style scoped>
 .hccs-footer {
   position: absolute;
-  bottom: 0.6rem;
+  bottom: 0.5rem;
   right: 0.8rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.15rem;
+  /* URL right-justified with logo's right edge; URL is wider than the logo
+   * so its left edge overhangs into the QR area, which is fine. */
+  align-items: flex-end;
+  gap: 0;
   z-index: 20;
   pointer-events: auto;
   font-family: var(--hccs-font-sans);
@@ -74,11 +97,12 @@ const isHidden = computed(() =>
 }
 
 .hccs-foot-url {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   border-bottom: 1px dotted currentColor;
   color: inherit;
   text-decoration: none;
   opacity: 0.85;
+  letter-spacing: 0.01em;
 }
 .hccs-foot-url:hover {
   opacity: 1;
@@ -87,10 +111,12 @@ const isHidden = computed(() =>
 .hccs-foot-logo {
   display: block;
   line-height: 0;
+  /* Small breathing room between URL baseline and logo top. */
+  margin-top: 0.1rem;
 }
 .hccs-foot-logo img {
-  width: 3rem;
-  height: 3rem;
+  width: 4.5rem;
+  height: 4.5rem;
   display: block;
   object-fit: contain;
 }

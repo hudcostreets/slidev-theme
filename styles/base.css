@@ -196,3 +196,31 @@
 .slidev-layout.light hr {
   border-top-color: var(--hccs-border-on-light);
 }
+
+/* ============================================================
+ * QR code recolor — built-in <SlideQR> renders black-on-white via uqr.
+ * Recolor the modules to HCCS green so the QR matches the deck palette.
+ * uqr emits a single <path> for the dark modules (current uqr version);
+ * we target both <path> and <rect> to be robust to future encoder changes.
+ * The white background comes from `.slidev-qr-svg { background: white }`
+ * in SlideQR.vue, so we don't override that.
+ * ============================================================ */
+.slidev-qr-svg svg path,
+.slidev-qr-svg svg rect:not([fill="white"]):not([fill="#fff"]):not([fill="#ffffff"]) {
+  fill: var(--hccs-green) !important;
+}
+
+/* QR in bottom-right: tuck immediately to the LEFT of the logo, sharing the
+ * same baseline so QR + logo form a horizontal row with URL above. Logo lives
+ * at right: 0.8rem, width 4.5rem → logo's left edge sits at right: 5.3rem.
+ * Add ~0.2rem gap before the QR. Force QR svg size to match logo (4.5rem)
+ * regardless of what `qr.size` was set to in headmatter — keeps the visual
+ * group symmetric. */
+.slidev-qr[data-position="br"] {
+  right: 5.5rem !important;
+  bottom: 0.5rem !important;
+}
+.slidev-qr[data-position="br"] .slidev-qr-svg {
+  width: 4.5rem !important;
+  height: 4.5rem !important;
+}
