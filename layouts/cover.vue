@@ -20,22 +20,23 @@
 }
 
 .cover :deep(h1) {
-  font-size: 3.2em;
+  font-size: 5em;
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.015em;
-  margin-bottom: 0.4em;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5em;
 }
 
 .cover :deep(h1 + p),
 .cover :deep(.subtitle) {
-  font-size: 1.15em;
+  font-size: 1.4em;
   font-weight: 400;
-  opacity: 0.85;
+  opacity: 0.9;
   margin-top: 0;
 }
 
 .cover :deep(p) {
-  margin: 0.25em 0;
+  margin: 0.3em 0;
+  font-size: 1.2em;
 }
 </style>
