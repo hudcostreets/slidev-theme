@@ -16,14 +16,15 @@
 }
 
 .section :deep(h1) {
-  font-size: 2.8em;
+  font-size: 3.8em;
   font-weight: 600;
-  line-height: 1.15;
-  margin-bottom: 0.3em;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.4em;
 }
 
 .section :deep(h1 + p) {
-  font-size: 1.1em;
+  font-size: 1.3em;
   opacity: 0.85;
   margin: 0.2em 0;
 }
